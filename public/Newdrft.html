@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMC Insights - Future of Education</title>
+    <style>
+        :root {
+            --dark-bg: #050505;
+            --dark-accent: #101010;
+            --cyan: #00ffff;
+            --neon-orange: #ff6b35;
+            --neon-green: #39ff14;
+            --text: #ffffff;
+            --text-secondary: #b0b0b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--cyan);
+            text-shadow: 0 0 20px var(--cyan);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--neon-orange);
+            color: var(--dark-bg);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 100px 0;
+        }
+        
+        .insight-card {
+            background-color: var(--dark-accent);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                var(--cyan),
+                var(--neon-orange),
+                var(--neon-green),
+                var(--cyan)
+            );
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .insight-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(1turn); }
+        }
+        
+        .insight-content {
+            position: relative;
+            background-color: var(--dark-accent);
+            border-radius: 15px;
+            z-index: 1;
+            height: 100%;
+        }
+        
+        .insight-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--cyan);
+        }
+        
+        .insight-card p {
+            color: var(--text-secondary);
+        }
+        
+        .hologram {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 100px 0;
+            perspective: 1000px;
+        }
+        
+        .hologram-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: rotate 15s infinite linear;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .hologram-side {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        
+        .front { transform: translateZ(200px); }
+        .back { transform: rotateY(180deg) translateZ(200px); }
+        .right { transform: rotateY(90deg) translateZ(200px); }
+        .left { transform: rotateY(-90deg) translateZ(200px); }
+        
+        footer {
+            background-color: var(--dark-accent);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav class="container">
+            <div class="logo">The BMC Insights</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#insights">Insights</a></li>
+                <li><a href="#hologram">Hologram</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">The BMC Insights</h1>
+                <p class="hero-subtitle">Explore the future of education at British Model College</p>
+                <a href="#insights" class="cta-button">Enter the Matrix</a>
+            </div>
+        </section>
+
+        <section id="insights" class="container">
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Newsletter</h3>
+                        <p>Keep up with the latest news and updates from our college community.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Student's Blogs</h3>
+                        <p>Read thought-provoking articles written by our talented students.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Upcoming School Events</h3>
+                        <p>Stay informed about exciting events and activities at BMC.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Inter-school Events</h3>
+                        <p>Participate in exciting competitions and collaborations with other schools.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Achievements</h3>
+                        <p>Celebrate the accomplishments of our students, faculty, and college.</p>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-content">
+                        <h3>Study Resources For Reference</h3>
+                        <p>Access a wealth of learning materials to enhance your academic journey at BMC.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hologram" class="hologram">
+            <div class="hologram-content">
+                <div class="hologram-side front">BMC Insights</div>
+                <div class="hologram-side back">Future of Education</div>
+                <div class="hologram-side right">Innovation</div>
+                <div class="hologram-side left">Technology</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BMC Insights. Shaping the future of education.</p>
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 50;
+            const colors = ['#00ffff', '#ff6b35', '#39ff14'];
+            const hero = document.querySelector('.hero');
+            
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                let size = Math.random() * 5 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                let duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+                
+                hero.appendChild(particle);
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize
+        createParticles();
+    </script>
+</body>
+</html>
